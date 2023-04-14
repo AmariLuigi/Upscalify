@@ -29,7 +29,14 @@ class UpscalerGUI(ctk.CTk):
             # re-assert the new window style
             self.wm_withdraw()
             self.after(10, lambda: self.wm_deiconify())
-
+        
+        def moveApp(self, e):
+            self.geometry(f'+{e.x_root}+{e.y_root}')
+        
+        #top frame
+        top_frame = ctk.CTkFrame(self)
+        top_frame.grid(row=0, column=1, columnspan=2, padx=5, pady=2, sticky='nsew')
+        top_frame.bind("<B1-Motion>", lambda e: moveApp(self, e))
 
         # Left Frame
         left_frame = ctk.CTkFrame(self)
@@ -70,9 +77,6 @@ class UpscalerGUI(ctk.CTk):
 
         right_frame = ctk.CTkFrame(self)
         right_frame.grid(row=1, column=1, padx=0, pady=11, sticky='nsew')
-
-        top_frame = ctk.CTkFrame(self)
-        top_frame.grid(row=0, column=1, padx=5, pady=2, sticky='ne')
 
         # Close Button
         close_btn = ctk.CTkButton(top_frame, text='X', width=20, height=20)
