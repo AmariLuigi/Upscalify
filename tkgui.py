@@ -1,7 +1,6 @@
 import customtkinter as ctk
 import os
-from ctypes import windll
-from PIL import Image, ImageTk
+from PIL import Image
 
 
 lastClickX = 0
@@ -34,17 +33,6 @@ class UpscalerGUI(ctk.CTk):
         self.bind('<Button-1>', SaveLastClickPos)
         self.bind('<B1-Motion>', Dragging)
 
-        GWL_EXSTYLE=-20
-        WS_EX_TOOLWINDOW = 0x00000080
-
-        def set_toolwindow(self):
-            hwnd = windll.user32.GetParent(self.winfo_id())
-            style = windll.user32.GetWindowLongPtrW(hwnd, GWL_EXSTYLE)
-            style = style | WS_EX_TOOLWINDOW
-            res = windll.user32.SetWindowLongPtrW(hwnd, GWL_EXSTYLE, style)
-            # re-assert the new window style
-            self.wm_withdraw()
-            self.after(10, lambda: self.wm_deiconify())
         
         #top frame
         top_frame = ctk.CTkFrame(self)
