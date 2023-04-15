@@ -35,7 +35,7 @@ class UpscalerGUI(ctk.CTk):
         
         #top frame
         top_frame = ctk.CTkFrame(self)
-        top_frame.grid(row=0, column=1, columnspan=2, padx=5, pady=2, sticky='nsew')
+        top_frame.grid(row=0, column=0, columnspan=2, padx=5, pady=2, sticky='nsew')
         top_frame.bind("<B1-Motion>", lambda e: moveApp(self, e))
 
         # Left Frame
