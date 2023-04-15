@@ -6,10 +6,6 @@ from ctypes import windll
 lastClickX = 0
 lastClickY = 0
 
-
-
-
-
 class UpscalerGUI(ctk.CTk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -51,7 +47,27 @@ class UpscalerGUI(ctk.CTk):
         
         #top frame
         top_frame = ctk.CTkFrame(self)
-        top_frame.grid(row=0, column=0, columnspan=2, padx=5, pady=2, sticky='nsew')
+        top_frame.grid(row=0, column=0, columnspan=2, padx=10, sticky='ew')
+
+
+        icon_frame = ctk.CTkFrame(top_frame, border_width=2, width=20, height=20)
+        icon_frame.pack(side="left")
+
+        button_frame = ctk.CTkFrame(top_frame, border_color="red", border_width=2,)
+        button_frame.pack(side="right")
+
+                # Close Button
+        close_btn = ctk.CTkButton(button_frame, text='X', width=20, height=20)
+        close_btn.grid(row=0, column=2, padx=1, pady=1, sticky='e')
+        close_btn.bind('<Button-1>', lambda e: self.destroy())
+        
+                #maximize button
+        maximize_btn = ctk.CTkButton(button_frame, text='🗖', width=20, height=20)
+        maximize_btn.grid(row=0, column=1, padx=1, pady=1, sticky='e')
+
+                #minimize button
+        minimize_btn = ctk.CTkButton(button_frame, text='-', width=20, height=20)
+        minimize_btn.grid(row=0, column=0, padx=1, pady=1, sticky='e')
 
         # Left Frame
         left_frame = ctk.CTkFrame(self)
@@ -93,27 +109,13 @@ class UpscalerGUI(ctk.CTk):
         right_frame = ctk.CTkFrame(self)
         right_frame.grid(row=1, column=1, padx=0, pady=11, sticky='nsew')
 
-        # Close Button
-        close_btn = ctk.CTkButton(top_frame, text='X', width=20, height=20)
-        close_btn.grid(row=0, column=2, padx=1, pady=1, sticky='ne')
-        close_btn.bind('<Button-1>', lambda e: self.destroy())
-        
-        #maximize button
-        maximize_btn = ctk.CTkButton(top_frame, text='🗖', width=20, height=20)
-        maximize_btn.grid(row=0, column=1, padx=1, pady=1, sticky='ne')
-
-        #minimize button
-        minimize_btn = ctk.CTkButton(top_frame, text='-', width=20, height=20)
-        minimize_btn.grid(row=0, column=0, padx=1, pady=1, sticky='ne')
-
-
- 
 
         # Image Preview
         image_preview_lbl = ctk.CTkLabel(right_frame, text='Image Preview', padx=10)
-        image_preview_lbl.grid(row=0, column=0, sticky='w')
+        image_preview_lbl.grid(row=1, column=0, sticky='w')
         image_preview_canvas = ctk.CTkCanvas(right_frame, width=256, height=256, bg='grey')
         image_preview_canvas.grid(row=2, column=0, padx=10, pady=10, sticky='nsew')
+
 
 if __name__ == '__main__':
     app = UpscalerGUI()
