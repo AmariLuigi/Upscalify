@@ -3,6 +3,12 @@ import os
 from ctypes import windll
 
 
+lastClickX = 0
+lastClickY = 0
+
+
+
+
 
 class UpscalerGUI(ctk.CTk):
     def __init__(self, *args, **kwargs):
@@ -18,6 +24,19 @@ class UpscalerGUI(ctk.CTk):
         ctk.set_appearance_mode('Dark')
         ctk.set_default_color_theme('dark-blue') 
 
+        def SaveLastClickPos(event):
+            global lastClickX, lastClickY
+            lastClickX = event.x
+            lastClickY = event.y
+
+
+        def Dragging(event):
+            x, y = event.x - lastClickX + self.winfo_x(), event.y - lastClickY + self.winfo_y()
+            self.geometry("+%s+%s" % (x , y))
+        
+        self.bind('<Button-1>', SaveLastClickPos)
+        self.bind('<B1-Motion>', Dragging)
+
         GWL_EXSTYLE=-20
         WS_EX_TOOLWINDOW = 0x00000080
 
@@ -30,13 +49,9 @@ class UpscalerGUI(ctk.CTk):
             self.wm_withdraw()
             self.after(10, lambda: self.wm_deiconify())
         
-        def moveApp(self, e):
-            self.geometry(f'+{e.x_root}+{e.y_root}')
-        
         #top frame
         top_frame = ctk.CTkFrame(self)
         top_frame.grid(row=0, column=0, columnspan=2, padx=5, pady=2, sticky='nsew')
-        top_frame.bind("<B1-Motion>", lambda e: moveApp(self, e))
 
         # Left Frame
         left_frame = ctk.CTkFrame(self)
